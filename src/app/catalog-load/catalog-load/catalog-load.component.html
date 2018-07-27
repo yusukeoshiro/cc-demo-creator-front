@@ -1,3 +1,24 @@
-<p>
-  catalog-load works!
-</p>
+<div class="container">
+
+    <h4>Category Tree</h4>
+
+    <div *ngFor="let category of categories">
+        <div class="category" [style.padding-left.px]="20*category.level">
+            <span *ngIf="category.isRoot">{{category.name}}</span>
+            <span *ngIf="!category.isRoot">
+                <input class="" type="text" [(ngModel)]="category.name" />
+            </span>
+            <i class="far fa-plus-square clickable" (click)="createSubCategory(category)"></i>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <h4>Products</h4>
+
+    <hr>
+    <h4>Product Images</h4>
+    <hr>
+
+</div>
