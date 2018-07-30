@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './common/header/header.component';
 import { SiteInitComponent } from './site-init/site-init/site-init.component';
 import { CatalogLoadComponent } from './catalog-load/catalog-load/catalog-load.component';
+import { HotTableModule } from '@handsontable/angular';
+
 
 import { Routes, RouterModule } from '@angular/router';
 
@@ -27,6 +29,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot( appRoutes ),
+    HotTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

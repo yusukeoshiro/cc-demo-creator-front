@@ -9,6 +9,8 @@
                 <input class="" type="text" [(ngModel)]="category.name" />
             </span>
             <i class="far fa-plus-square clickable" (click)="createSubCategory(category)"></i>
+            <i class="far fa-times-circle clickable" *ngIf="!category.isRoot" (click)="deleteSubcategory(category)"></i>
+
 
         </div>
     </div>
@@ -16,9 +18,34 @@
     <hr>
 
     <h4>Products</h4>
+    <hot-table [colHeaders]="true" [rowHeaders]="true" [data]="dataset">
+        <hot-column data="name" title="Product Name"></hot-column>
+        <hot-column data="category" title="Primary Category"></hot-column>
+        <hot-column data="price" title="Price"></hot-column>
+
+    </hot-table>
+
+
+    <span (click)="addRows()">Add 10 rows</span>
+    {{dataset}}
+
+
+
 
     <hr>
     <h4>Product Images</h4>
     <hr>
+
+    <div>
+        <div class="image-thumb" *ngFor="let image of productImages"
+            [ngStyle]="{ 'background-image': 'url(' + image.url + ')'}"></div>
+
+    </div>
+
+
+    <a href="#" id="upload_widget_opener">Upload Images</a>
+
+
+
 
 </div>

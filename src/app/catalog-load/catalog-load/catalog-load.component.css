@@ -4,3 +4,12 @@
 .category {
     margin: 5px;
 }
+
+
+.image-thumb{
+    height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin: 5px;
+    background-size:cover;
+}
