@@ -1,22 +1,39 @@
 <div class="container">
 
     <div class="container">
+        <h4>Catalog Detail</h4>
 
-            <h4>Category Tree</h4>
-
-            <div *ngFor="let category of categories">
-                <div class="category" [style.padding-left.px]="20*category.level">
-                    <span *ngIf="category.isRoot">{{category.name}}</span>
-                    <span *ngIf="!category.isRoot">
-                        <input class="" type="text" [(ngModel)]="category.name" placeholder="Name" (blur)="onCategoryBlur(category)"/>
-                        <input class="" type="text" [(ngModel)]="category.id" placeholder="ID"/>
-                    </span>
-                    <i class="far fa-plus-square clickable" (click)="createSubCategory(category)"></i>
-                    <i class="far fa-times-circle clickable" *ngIf="!category.isRoot" (click)="deleteSubcategory(category)"></i>
-
-
-                </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">ID</label>
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Catalog ID">
             </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Name</label>
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Catalog Name">
+            </div>
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="container">
+
+        <h4>Category Tree</h4>
+
+        <div *ngFor="let category of categories">
+            <div class="category" [style.padding-left.px]="20*category.level">
+                <span *ngIf="category.isRoot">{{category.name}}</span>
+                <span *ngIf="!category.isRoot">
+                    <input class="" type="text" [(ngModel)]="category.name" placeholder="Name" (blur)="onCategoryBlur(category)"/>
+                    <input class="" type="text" [(ngModel)]="category.id" placeholder="ID"/>
+                </span>
+                <i class="far fa-plus-square clickable" (click)="createSubCategory(category)"></i>
+                <i class="far fa-times-circle clickable" *ngIf="!category.isRoot" (click)="deleteSubcategory(category)"></i>
+
+
+            </div>
+        </div>
 
 
     </div>
@@ -104,16 +121,9 @@
 
 
     </div>
+    <hr>
 
-
-
-
-
-
-
-
-
-    <div class="text-center">
+    <div class="text-center" style="margin: 50px;">
         <button type="button" class="btn btn-primary">Build and Deploy Catalog</button>
     </div>
 
