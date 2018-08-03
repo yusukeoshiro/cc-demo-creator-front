@@ -28,16 +28,12 @@ export class CatalogLoadComponent implements OnInit {
     public productImages: Array<ProductImage>;
     public dataset: Array<any>;
     private hotTable: any;
-    private hotTableOptions = {
-        columns: [
-          {data: 4, renderer: 'html'}
-        ]
-    };
-    private priceBoundary = {
+    public priceBoundary = {
         min: 100,
-        max: 1000
+        max: 1000,
+        decimalPlaces: null
     };
-    private imageRandomConfig = {
+    public imageRandomConfig = {
         imagesPerProduct: null
     };
     private selectedProductForImage;
@@ -158,6 +154,10 @@ export class CatalogLoadComponent implements OnInit {
         }
         this.hotTable.render();
 
+    }
+
+    onRandomizeImageAssignment = () => {
+        // todo
     }
 
 
