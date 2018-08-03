@@ -6,10 +6,18 @@
 }
 
 
-.image-thumb{
+.image-thumb {
     height: 100px;
     width: 100px;
     display: inline-block;
     margin: 5px;
     background-size:cover;
+    cursor: pointer;
+}
+
+.selected {
+    border: 4px solid black;
+}
+.image-in-cell {
+    height: 30px;
 }

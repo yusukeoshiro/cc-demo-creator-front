@@ -15,6 +15,7 @@ export class Category {
     initAsRoot () {
         this.isRoot = true;
         this.name = 'root';
+        this.id = 'root';
         this.level = 0;
     }
 

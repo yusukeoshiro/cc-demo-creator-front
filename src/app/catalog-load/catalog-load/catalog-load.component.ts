@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../../models/category.model';
 import { ProductImage } from '../../models/productimage.model';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Util } from '../../util';
+import { ApiService } from '../../api.service';
+import * as Handsontable from 'handsontable';
+
+import { HotTableRegisterer } from '@handsontable/angular';
 
 
 declare const cloudinary: any;
@@ -22,11 +27,139 @@ export class CatalogLoadComponent implements OnInit {
     public categories: Array<Category>;
     public productImages: Array<ProductImage>;
     public dataset: Array<any>;
+    private hotTable: any;
+    private hotTableOptions = {
+        columns: [
+          {data: 4, renderer: 'html'}
+        ]
+    };
+    private priceBoundary = {
+        min: 100,
+        max: 1000
+    };
+    private imageRandomConfig = {
+        imagesPerProduct: null
+    };
+    private selectedProductForImage;
+
+
+    constructor ( private hotRegisterer: HotTableRegisterer, private util: Util, private apiService: ApiService ) { }
+
+    getValidProducts () {
+        const products = new Array<any>();
+        for ( const product of this.dataset ) {
+            if ( product.id && product.name ) {
+                products.push( product );
+            }
+        }
+        return products;
+    }
 
 
 
+    onAfterInit = (hotInstance) => {
+        this.hotTable = hotInstance;
+        this.addRows(); // add 10 rows
+    }
 
-    constructor () { }
+    onRandomizeProductId = () => {
+        for ( const product of this.dataset ) {
+            if ( !product.id && product.name ) {
+                product.id = this.util.makeId();
+            }
+        }
+        this.hotTable.render();
+    }
+
+    onRandomizeCategoryAssignment = () => {
+        console.log( 'random category assignment triggered' );
+        const lowLevelCategories = new Array<Category>();
+        let rerender = false;
+        for ( const category of this.categories ) {
+            if ( category.subcategories.length === 0 ) {
+                lowLevelCategories.push( category );
+            }
+        }
+
+        for ( const product of this.dataset ) {
+            if ( !product.category && product.name ) {
+                const randomIndex = Math.floor( Math.random() * lowLevelCategories.length );
+                product.category = lowLevelCategories[randomIndex].id;
+                rerender = true;
+            }
+        }
+        if ( rerender ) {
+            this.hotTable.render();
+        }
+
+    }
+
+
+    onRandomizePrice = ( min: number, max: number, precision?: number) => {
+
+        let rerender = false;
+        for ( const product of this.dataset ) {
+            if ( !product.category && product.name ) {
+                const price = this.util.round( Math.random() * ( max - min ) + min, precision || 0 );
+                // const  = Math.floor( Math.random() * lowLevelCategories.length );
+                product.price = price;
+                rerender = true;
+            }
+        }
+        if ( rerender ) {
+            this.hotTable.render();
+        }
+
+    }
+
+
+    onCategoryBlur = (category: Category) => {
+        if ( category.name && !category.id ) {
+            // try to autopopulate id
+            this.apiService.getMcabParse( category.name ).subscribe(
+                (mecabResponse: any) => {
+                    const pronounceableWords = new Array<String>();
+                    for ( const word of mecabResponse.result ) {
+                        // console.log( word );
+                        if ( word.features[7] !== '*' && word.features[7] !== undefined ) {
+                            pronounceableWords.push( word.features[7] );
+                        } else if ( word.features[0] === '名詞' ) {
+                            pronounceableWords.push( word.surface );
+                        }
+                    }
+                    const kana = pronounceableWords.join('-');
+                    this.apiService.getRomji( kana ).subscribe(
+                        (romajiResponse: any) => {
+                            category.id = romajiResponse.result.romaji;
+                        }
+                    );
+                },
+                (error) => {
+                    alert( 'oops something went wrong' );
+                }
+            );
+        }
+    }
+
+
+    onAssignImagesToProduct = (productId: String) => {
+        for ( const product of this.dataset ) {
+            if ( product.id === productId && productId !== null && productId !== undefined ) {
+                product.imagesHtml = '';
+                product.images = new Array<ProductImage>();
+                for ( const image of this.productImages ) {
+                    if ( image.isSelected ) {
+                        product.imagesHtml += '<img style="height:25px;" src="' + image.url + '"/>';
+                        product.images.push( image );
+                    }
+                }
+                break;
+            }
+        }
+        this.hotTable.render();
+
+    }
+
 
     ngOnInit () {
 
@@ -40,7 +173,6 @@ export class CatalogLoadComponent implements OnInit {
 
         this.dataset = new Array<any>();
 
-
         document.getElementById('upload_widget_opener').addEventListener('click', function() {
             cloudinary.openUploadWidget(
                 {
@@ -51,9 +183,6 @@ export class CatalogLoadComponent implements OnInit {
 
                 },
                 function (error, result) {
-                    console.log( '----' );
-                    console.log( this );
-                    console.log(error, result);
                     if ( result instanceof Array ) {
                         for ( let i = 0; i < result.length; i++) {
                             productImagesGlobal.push( new ProductImage( result[i] ) );
@@ -68,18 +197,18 @@ export class CatalogLoadComponent implements OnInit {
 
 
     addRows (rows?: number) {
-        console.log( rows );
         if ( rows === undefined ) {
             rows = 10;
         }
         for ( let i = 0; i < rows; i++ ) {
-            console.log('test');
             this.dataset.push({
+                id: '',
                 name: '',
-                category: 'root',
-                price: 1000
+                category: '',
+                price: null
             });
         }
+        this.hotTable.render();
     }
 
     createSubCategory ( category: Category ) {
@@ -92,5 +221,8 @@ export class CatalogLoadComponent implements OnInit {
         this.categories.splice( index, 1 );
 
     }
+
+
+
 
 }

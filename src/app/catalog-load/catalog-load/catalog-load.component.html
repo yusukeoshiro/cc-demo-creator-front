@@ -1,50 +1,121 @@
 <div class="container">
 
-    <h4>Category Tree</h4>
+    <div class="container">
 
-    <div *ngFor="let category of categories">
-        <div class="category" [style.padding-left.px]="20*category.level">
-            <span *ngIf="category.isRoot">{{category.name}}</span>
-            <span *ngIf="!category.isRoot">
-                <input class="" type="text" [(ngModel)]="category.name" />
-            </span>
-            <i class="far fa-plus-square clickable" (click)="createSubCategory(category)"></i>
-            <i class="far fa-times-circle clickable" *ngIf="!category.isRoot" (click)="deleteSubcategory(category)"></i>
+            <h4>Category Tree</h4>
 
+            <div *ngFor="let category of categories">
+                <div class="category" [style.padding-left.px]="20*category.level">
+                    <span *ngIf="category.isRoot">{{category.name}}</span>
+                    <span *ngIf="!category.isRoot">
+                        <input class="" type="text" [(ngModel)]="category.name" placeholder="Name" (blur)="onCategoryBlur(category)"/>
+                        <input class="" type="text" [(ngModel)]="category.id" placeholder="ID"/>
+                    </span>
+                    <i class="far fa-plus-square clickable" (click)="createSubCategory(category)"></i>
+                    <i class="far fa-times-circle clickable" *ngIf="!category.isRoot" (click)="deleteSubcategory(category)"></i>
+
+
+                </div>
+            </div>
+
+
+    </div>
+
+    <hr>
+    <div class="container">
+        <h4>Product Images</h4>
+        <div class="card" style="margin-bottom: 20px;">
+            <div class="card-body">
+                <div class="image-thumb"
+                    *ngFor="let image of productImages" [ngStyle]="{ 'background-image': 'url(' + image.url + ')'}"
+                    (click)="image.toggleIsSelected()" [ngClass]="{selected: image.isSelected}">
+                </div>
+                <div *ngIf="productImages.length > 0">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <select class="form-control form-control-sm" [(ngModel)]="selectedProductIdForImage">
+                                <option *ngFor="let product of getValidProducts()" [ngValue]="product.id">{{product.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onAssignImagesToProduct(selectedProductIdForImage)">Assign to this Product</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <span *ngIf="productImages.length === 0">
+                    Please upload images
+                </span>
+            </div>
 
         </div>
-    </div>
-
-    <hr>
-
-    <h4>Products</h4>
-    <hot-table [colHeaders]="true" [rowHeaders]="true" [data]="dataset">
-        <hot-column data="name" title="Product Name"></hot-column>
-        <hot-column data="category" title="Primary Category"></hot-column>
-        <hot-column data="price" title="Price"></hot-column>
-
-    </hot-table>
-
-
-    <span (click)="addRows()">Add 10 rows</span>
-    {{dataset}}
-
-
-
-
-    <hr>
-    <h4>Product Images</h4>
-    <hr>
-
-    <div>
-        <div class="image-thumb" *ngFor="let image of productImages"
-            [ngStyle]="{ 'background-image': 'url(' + image.url + ')'}"></div>
+        <a class="btn btn-outline-secondary btn-sm" id="upload_widget_opener">Upload Images</a>
 
     </div>
 
 
-    <a href="#" id="upload_widget_opener">Upload Images</a>
 
+    <hr>
+
+
+    <div class="container">
+        <h4>Products</h4>
+        <div class="card" style="margin-bottom: 30px;">
+            <div class="card-body">
+                <h5 class="card-title"><small>Randomizer</small></h5>
+                <div>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onRandomizeProductId()">Randomize Product ID</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onRandomizeCategoryAssignment()">Randomize Category Assignment</button>
+
+                    <hr>
+
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        (click)="onRandomizePrice(priceBoundary.min, priceBoundary.max, priceBoundary.decimalPlaces)">Randomize Price</button>
+                    <input class="" type="number" [(ngModel)]="priceBoundary.min" placeholder="min price"/>
+                    <input class="" type="number" [(ngModel)]="priceBoundary.max" placeholder="max price"/>
+                    <input class="" type="number" [(ngModel)]="priceBoundary.decimalPlaces" placeholder="decimal places"/>
+
+                    <hr>
+
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                        (click)="onRandomizeImageAssignment()">Randomize Image Assignment</button>
+                    <input class="" type="number" [(ngModel)]="imageRandomConfig.imagesPerProduct" placeholder="Images per Product"/>
+                </div>
+
+            </div>
+        </div>
+
+
+        <hot-table [hotId]="instance" [colHeaders]="true" [rowHeaders]="true" [data]="dataset" [afterInit]="onAfterInit">
+            <hot-column data="id" title="Product ID"></hot-column>
+            <hot-column data="name" title="Product Name"></hot-column>
+            <hot-column data="category" title="Primary Category"></hot-column>
+            <hot-column data="price" title="Price"></hot-column>
+            <hot-column data="imagesHtml" title="Images" renderer="html"></hot-column>
+        </hot-table>
+
+        <div style="margin-top: 20px;">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="addRows()">Add 10 rows</button>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="text-center">
+        <button type="button" class="btn btn-primary">Build and Deploy Catalog</button>
+    </div>
 
 
 
