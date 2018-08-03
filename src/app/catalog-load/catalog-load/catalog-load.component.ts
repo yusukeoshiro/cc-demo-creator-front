@@ -95,7 +95,7 @@ export class CatalogLoadComponent implements OnInit {
 
         let rerender = false;
         for ( const product of this.dataset ) {
-            if ( !product.category && product.name ) {
+            if ( !product.price && product.name ) {
                 const price = this.util.round( Math.random() * ( max - min ) + min, precision || 0 );
                 // const  = Math.floor( Math.random() * lowLevelCategories.length );
                 product.price = price;
