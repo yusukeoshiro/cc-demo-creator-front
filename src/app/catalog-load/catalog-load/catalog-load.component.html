@@ -6,24 +6,23 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="catalog-id">Catalog ID</label>
-                <input type="email" class="form-control" id="catalog-id" placeholder="Catalog ID">
+                <input type="text" [(ngModel)]="catalogDetail.id" class="form-control" id="catalog-id" placeholder="Catalog ID">
             </div>
             <div class="form-group col-md-6">
                 <label for="catalog-name">Catalog Name</label>
-                <input type="text" class="form-control" id="catalog-name" placeholder="Catalog Name">
+                <input type="text" [(ngModel)]="catalogDetail.name" class="form-control" id="catalog-name" placeholder="Catalog Name">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="bm-user-name">BM User Name</label>
-                <input type="text" class="form-control" id="bm-user-name" placeholder="BM User Name">
+                <input type="text" [(ngModel)]="catalogDetail.bmUserName" class="form-control" id="bm-user-name" placeholder="BM User Name">
             </div>
             <div class="bm-password col-md-6">
                 <label for="inputPassword4">BM Password</label>
-                <input type="password" class="form-control" id="bm-password" placeholder="Catalog Name">
+                <input type="password" [(ngModel)]="catalogDetail.bmPassword" class="form-control" id="bm-password" placeholder="Catalog Name">
             </div>
         </div>
-
     </div>
     <hr>
 
@@ -115,7 +114,7 @@
         </div>
 
 
-        <hot-table [colHeaders]="true" [rowHeaders]="true" [data]="dataset" [afterInit]="onAfterInit">
+        <hot-table [colHeaders]="true" [rowHeaders]="true" [data]="products" [afterInit]="onAfterInit">
             <hot-column data="id" title="Product ID"></hot-column>
             <hot-column data="name" title="Product Name"></hot-column>
             <hot-column data="category" title="Primary Category"></hot-column>
@@ -134,7 +133,7 @@
     <hr>
 
     <div class="text-center" style="margin: 50px;">
-        <button type="button" class="btn btn-primary">Build and Deploy Catalog</button>
+        <button type="button" (click)="onSubmitCatalogPopulate()" class="btn btn-primary">Build and Deploy Catalog</button>
     </div>
 
 

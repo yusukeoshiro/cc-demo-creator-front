@@ -19,6 +19,7 @@ export class Category {
         this.level = 0;
     }
 
+
     createSubCategory () {
         const subcategory = new Category();
         subcategory.parent = this;
@@ -32,6 +33,16 @@ export class Category {
 
     }
 
+    toObject () {
+        const obj = {
+            name: this.name,
+            id: this.id,
+            parent: ( this.parent ) ? this.parent.id : null,
+            level: this.level,
+            isRoot: this.isRoot
+        };
+        return obj;
+    }
 
 
 }

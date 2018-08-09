@@ -26,7 +26,13 @@ export class CatalogLoadComponent implements OnInit {
 
     public categories: Array<Category>;
     public productImages: Array<ProductImage>;
-    public dataset: Array<any>;
+    public catalogDetail = {
+        name: null,
+        id: null,
+        bmUserName: null,
+        bmPassword: null
+    };
+    public products: Array<any>;
     private hotTable: any;
     public priceBoundary = {
         min: 100,
@@ -43,7 +49,7 @@ export class CatalogLoadComponent implements OnInit {
 
     getValidProducts () {
         const products = new Array<any>();
-        for ( const product of this.dataset ) {
+        for ( const product of this.products ) {
             if ( product.id && product.name ) {
                 products.push( product );
             }
@@ -59,7 +65,7 @@ export class CatalogLoadComponent implements OnInit {
     }
 
     onRandomizeProductId = () => {
-        for ( const product of this.dataset ) {
+        for ( const product of this.products ) {
             if ( !product.id && product.name ) {
                 product.id = this.util.makeId();
             }
@@ -77,7 +83,7 @@ export class CatalogLoadComponent implements OnInit {
             }
         }
 
-        for ( const product of this.dataset ) {
+        for ( const product of this.products ) {
             if ( !product.category && product.name ) {
                 const randomIndex = Math.floor( Math.random() * lowLevelCategories.length );
                 product.category = lowLevelCategories[randomIndex].id;
@@ -94,7 +100,7 @@ export class CatalogLoadComponent implements OnInit {
     onRandomizePrice = ( min: number, max: number, precision?: number) => {
 
         let rerender = false;
-        for ( const product of this.dataset ) {
+        for ( const product of this.products ) {
             if ( !product.price && product.name ) {
                 const price = this.util.round( Math.random() * ( max - min ) + min, precision || 0 );
                 // const  = Math.floor( Math.random() * lowLevelCategories.length );
@@ -139,7 +145,7 @@ export class CatalogLoadComponent implements OnInit {
 
 
     onAssignImagesToProduct = (productId: String) => {
-        for ( const product of this.dataset ) {
+        for ( const product of this.products ) {
             if ( product.id === productId && productId !== null && productId !== undefined ) {
                 product.imagesHtml = '';
                 product.images = new Array<ProductImage>();
@@ -161,6 +167,44 @@ export class CatalogLoadComponent implements OnInit {
     }
 
 
+    onSubmitCatalogPopulate = () => {
+        // vaidate form
+        if ( !this.catalogDetail.name ) {
+            alert( 'Please enter catalog name' );
+        } else if ( !this.catalogDetail.id ) {
+            alert( 'Please enter catalog ID' );
+        } else if ( !this.catalogDetail.bmUserName ) {
+            alert( 'Please enter BM user name' );
+        } else if ( !this.catalogDetail.bmPassword ) {
+            alert( 'Please enter BM password' );
+        }
+
+        const categories = new Array<any>();
+        for ( const category of this.categories ) {
+            categories.push( category.toObject() );
+        }
+
+        const catalogObject = {
+            id: this.catalogDetail.id,
+            name: this.catalogDetail.name,
+            bmUserName: this.catalogDetail.bmUserName,
+            bmPassword: this.catalogDetail.bmPassword,
+            categories: categories,
+            images: this.productImages,
+            products: this.getValidProducts()
+        };
+
+        this.apiService.submitCatalog({catalog: catalogObject}).subscribe(
+            ( result ) => {
+                console.log( result );
+            },
+            ( error ) => {
+                console.log( error );
+            }
+        );
+    }
+
+
     ngOnInit () {
 
 
@@ -171,7 +215,7 @@ export class CatalogLoadComponent implements OnInit {
         this.categories = new Array<Category>();
         this.categories.push( root );
 
-        this.dataset = new Array<any>();
+        this.products = new Array<any>();
 
         document.getElementById('upload_widget_opener').addEventListener('click', function() {
             cloudinary.openUploadWidget(
@@ -201,7 +245,7 @@ export class CatalogLoadComponent implements OnInit {
             rows = 10;
         }
         for ( let i = 0; i < rows; i++ ) {
-            this.dataset.push({
+            this.products.push({
                 id: '',
                 name: '',
                 category: '',
