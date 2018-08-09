@@ -220,8 +220,8 @@ export class CatalogLoadComponent implements OnInit {
         document.getElementById('upload_widget_opener').addEventListener('click', function() {
             cloudinary.openUploadWidget(
                 {
-                    cloud_name: 'hj0hjpsip',
-                    upload_preset: 'jjiavbmj',
+                    cloud_name: 'hjsua7uij',
+                    upload_preset: 'dtaohxda',
                     sources: [ 'local', 'url', 'image_search'],
                     google_api_key: 'AIzaSyD9_yc3mD-MJaTIk470spkm93hZPO_CS0E'
 
