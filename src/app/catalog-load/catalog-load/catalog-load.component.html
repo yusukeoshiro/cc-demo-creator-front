@@ -4,6 +4,14 @@
         <h4>Catalog Detail</h4>
 
         <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="host-name">Your Commerce Cloud Host Name</label>
+                <input type="text" [(ngModel)]="catalogDetail.host" class="form-control" id="host-name" placeholder="name-pod-dw.demandware.net">
+            </div>
+        </div>
+
+
+        <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="catalog-id">Catalog ID</label>
                 <input type="text" [(ngModel)]="catalogDetail.id" class="form-control" id="catalog-id" placeholder="Catalog ID">

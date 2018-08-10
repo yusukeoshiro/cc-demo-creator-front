@@ -27,6 +27,7 @@ export class CatalogLoadComponent implements OnInit {
     public categories: Array<Category>;
     public productImages: Array<ProductImage>;
     public catalogDetail = {
+        host: null,
         name: null,
         id: null,
         bmUserName: null,
@@ -177,6 +178,8 @@ export class CatalogLoadComponent implements OnInit {
             alert( 'Please enter BM user name' );
         } else if ( !this.catalogDetail.bmPassword ) {
             alert( 'Please enter BM password' );
+        } else if ( !this.catalogDetail.host ) {
+            alert( 'Please enter CC host name' );
         }
 
         const categories = new Array<any>();
@@ -185,6 +188,7 @@ export class CatalogLoadComponent implements OnInit {
         }
 
         const catalogObject = {
+            host: this.catalogDetail.host,
             id: this.catalogDetail.id,
             name: this.catalogDetail.name,
             bmUserName: this.catalogDetail.bmUserName,
