@@ -46,7 +46,7 @@ export class ApiService {
     }
 
     submitCatalog( params ) {
-        const url = 'http://localhost:3000/api/v1/catalog';
+        const url = this.env.SERVER_URL + '/api/v1/catalog';
         return this.httpClient.post(url, params);
     }
 
