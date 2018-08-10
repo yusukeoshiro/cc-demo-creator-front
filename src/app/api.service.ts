@@ -5,7 +5,31 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class ApiService {
 
-    constructor( private httpClient: HttpClient ) {}
+    private env: any;
+    envReceived = new EventEmitter<any>(); // fired when environmental variables are received
+
+
+    constructor( private httpClient: HttpClient ) {
+        this.httpClient.get('/api/env').subscribe(
+            ( data: any ) => {
+                if ( data.SERVER_URL ) {
+                    console.log( 'environmental variable obtained successfully!' );
+                    this.env = data;
+                    this.envReceived.emit( this.env );
+                } else {
+                    alert( 'error occured while getting environmental variables' );
+                }
+            },
+            ( error ) => {
+                alert( 'error occured while getting environmental variables' );
+            }
+        );
+    }
+
+    getEnv () {
+        return this.env;
+    }
+
 
     getMcabParse ( text: String ) {
 

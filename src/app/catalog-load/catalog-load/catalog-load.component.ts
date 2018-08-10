@@ -217,13 +217,14 @@ export class CatalogLoadComponent implements OnInit {
 
         this.products = new Array<any>();
 
-        document.getElementById('upload_widget_opener').addEventListener('click', function() {
+        document.getElementById('upload_widget_opener').addEventListener('click', () => {
+
             cloudinary.openUploadWidget(
                 {
-                    cloud_name: 'hjsua7uij',
-                    upload_preset: 'dtaohxda',
+                    cloud_name: this.apiService.getEnv().CLOUDINARY_CLOUD_NAME,
+                    upload_preset: this.apiService.getEnv().CLOUDINARY_UPLOAD_PRESET,
                     sources: [ 'local', 'url', 'image_search'],
-                    google_api_key: 'AIzaSyD9_yc3mD-MJaTIk470spkm93hZPO_CS0E'
+                    google_api_key: this.apiService.getEnv().GOOGLE_IMAGE_API_KEY
 
                 },
                 function (error, result) {
