@@ -41,7 +41,7 @@ export class CatalogLoadComponent implements OnInit {
         decimalPlaces: null
     };
     public imageRandomConfig = {
-        imagesPerProduct: null
+        imagesPerProduct: 2
     };
     private selectedProductForImage;
 
@@ -164,7 +164,22 @@ export class CatalogLoadComponent implements OnInit {
     }
 
     onRandomizeImageAssignment = () => {
-        // todo
+        if ( !(this.imageRandomConfig.imagesPerProduct > 0) ) {
+            return; // do nothing
+        }
+
+        for ( const product of this.getValidProducts() ) {
+            if ( product.images.length === 0 ) {
+                // add images
+                for ( let i = 0; i < this.imageRandomConfig.imagesPerProduct; i++ ) {
+                    const index = Math.floor( this.productImages.length * Math.random() );
+                    const image = this.productImages[index];
+                    product.imagesHtml += '<img style="height:25px;" src="' + image.url + '"/>';
+                    product.images.push( image );
+                }
+            }
+        }
+        this.hotTable.render();
     }
 
 
@@ -254,7 +269,9 @@ export class CatalogLoadComponent implements OnInit {
                 id: '',
                 name: '',
                 category: '',
-                price: null
+                price: null,
+                imagesHtml: '',
+                images: new Array<ProductImage>()
             });
         }
         this.hotTable.render();
