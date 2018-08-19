@@ -31,7 +31,8 @@ export class CatalogLoadComponent implements OnInit {
         name: null,
         id: null,
         bmUserName: null,
-        bmPassword: null
+        bmPassword: null,
+        email: null
     };
     public products: Array<any>;
     private hotTable: any;
@@ -208,6 +209,7 @@ export class CatalogLoadComponent implements OnInit {
             name: this.catalogDetail.name,
             bmUserName: this.catalogDetail.bmUserName,
             bmPassword: this.catalogDetail.bmPassword,
+            email: this.catalogDetail.email,
             categories: categories,
             images: this.productImages,
             products: this.getValidProducts()
