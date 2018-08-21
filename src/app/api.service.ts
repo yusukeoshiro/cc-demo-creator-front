@@ -71,4 +71,9 @@ export class ApiService {
         return this.httpClient.get(url);
     }
 
+    submitSite = ( params ) => {
+        const url = this.env.SERVER_URL + '/api/v1/site';
+        return this.httpClient.post(url, params);
+    }
+
 }

@@ -18,7 +18,7 @@ import { ApiService } from './api.service';
 import { Routes, RouterModule } from '@angular/router';
 
 const appRoutes: Routes = [
-    { path: '', component: CatalogLoadComponent },
+    { path: '', component: SiteInitComponent },
     { path: 'siteInit', component: SiteInitComponent },
     { path: 'catalogLoad', component: CatalogLoadComponent}
 ];

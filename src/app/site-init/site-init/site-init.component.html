@@ -1,3 +1,73 @@
-<p>
-  site-init works!
-</p>
+<div class="container">
+    <div class="container">
+        <h4>Instance Detail</h4>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="host-name">Your Commerce Cloud Host Name</label>
+                <input type="text" [(ngModel)]="instanceDetail.host" class="form-control" id="host-name" placeholder="name-pod-dw.demandware.net">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="bm-user-name">BM User Name</label>
+                <input type="text" [(ngModel)]="instanceDetail.bmUserName" class="form-control" id="bm-user-name" placeholder="BM User Name">
+            </div>
+            <div class="bm-password col-md-6">
+                <label for="inputPassword4">BM Password</label>
+                <input type="password" [(ngModel)]="instanceDetail.bmPassword" class="form-control" id="bm-password" placeholder="BM Password">
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+
+
+    <div class="container">
+        <h4>Site Detail</h4>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="site-id">Site ID</label>
+                <input type="text" [(ngModel)]="siteDetail.id" class="form-control" id="site-id" placeholder="my_awesome_site">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Site Name</label>
+                <input type="text" [(ngModel)]="siteDetail.name" class="form-control" id="site-name" placeholder="My Awesome Site">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="site-default-currency">Default Currency</label>
+                <input type="text" [(ngModel)]="siteDetail.defaultCurrency" class="form-control" id="site-default-currency" placeholder="USD">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-allowed-currencies">Allowed Currencies</label>
+                <input type="text" [(ngModel)]="siteDetail.allowedCurrencies" class="form-control" id="site-allowed-currencies" placeholder="USD:JPY:CNY:EUR">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="site-main-color">Main Color</label>
+                <input type="text" [(ngModel)]="siteDetail.mainColor" class="form-control" id="site-main-color" placeholder="#005ED4">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-brand-logo-url">Brand Logo URL</label>
+                <input type="text" [(ngModel)]="siteDetail.brandLogoUrl" class="form-control" id="site-brand-logo-url" placeholder="https://my.image.url">
+            </div>
+        </div>
+
+
+        <hr>
+
+        <div class="text-center" style="margin: 50px;">
+            <button type="button" (click)="onSubmitSiteInit()" class="btn btn-primary">Build and Deploy Site</button>
+        </div>
+
+
+
+    </div>
+
+</div>
