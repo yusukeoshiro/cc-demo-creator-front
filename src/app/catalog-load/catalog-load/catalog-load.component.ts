@@ -47,6 +47,8 @@ export class CatalogLoadComponent implements OnInit {
     public sites: Array<any>;
     public selectedSiteForAssignment = '';
     public selectedProductForImage: String;
+    public isRebuildSearchIndex = true;
+    public selectedPricebookCurrency = '';
 
 
     constructor ( private hotRegisterer: HotTableRegisterer, private util: Util, private apiService: ApiService ) { }
@@ -214,16 +216,19 @@ export class CatalogLoadComponent implements OnInit {
             email: this.catalogDetail.email,
             categories: categories,
             images: this.productImages,
-            products: this.getValidProducts()
+            products: this.getValidProducts(),
+            pricebookCurrency: this.selectedPricebookCurrency
         };
 
         if ( this.selectedSiteForAssignment !== '' ) {
             catalogObject['siteAssignment'] = this.selectedSiteForAssignment;
+            catalogObject['rebuildSearchIndex'] = this.isRebuildSearchIndex;
         }
 
         this.apiService.submitCatalog({catalog: catalogObject}).subscribe(
             ( result ) => {
                 console.log( result );
+                alert('Request was successfully put in a queue! Please wait patiently while we process your request!');
             },
             ( error ) => {
                 console.log( error );
