@@ -44,7 +44,9 @@ export class CatalogLoadComponent implements OnInit {
     public imageRandomConfig = {
         imagesPerProduct: 2
     };
-    private selectedProductForImage;
+    public sites: Array<any>;
+    public selectedSiteForAssignment = '';
+    public selectedProductForImage: String;
 
 
     constructor ( private hotRegisterer: HotTableRegisterer, private util: Util, private apiService: ApiService ) { }
@@ -215,6 +217,10 @@ export class CatalogLoadComponent implements OnInit {
             products: this.getValidProducts()
         };
 
+        if ( this.selectedSiteForAssignment !== '' ) {
+            catalogObject['siteAssignment'] = this.selectedSiteForAssignment;
+        }
+
         this.apiService.submitCatalog({catalog: catalogObject}).subscribe(
             ( result ) => {
                 console.log( result );
@@ -223,6 +229,47 @@ export class CatalogLoadComponent implements OnInit {
                 console.log( error );
             }
         );
+    }
+
+    onGetSites = ( catalogDetail ) => {
+
+        const getSites = ( host, accessToken ) => {
+            this.apiService.getSites( host, accessToken ).subscribe(
+                ( result: any ) => {
+                    console.log( result );
+                    this.sites = result.result.data;
+                },
+                ( error ) => {
+                    console.log( error );
+                }
+            );
+        };
+
+
+        if ( catalogDetail.host && catalogDetail.bmUserName && catalogDetail.bmPassword ) {
+
+            if ( this.apiService.getAccessToken() === undefined || this.apiService.getAccessToken() === '' ) {
+                const params = {
+                    'host': catalogDetail.host,
+                    'bmUserName': catalogDetail.bmUserName,
+                    'bmPassword': catalogDetail.bmPassword
+                };
+                this.apiService.login( params ).subscribe(
+                    ( result ) => {
+                        console.log( result );
+                        this.apiService.setAccessToken( result['access_token'] );
+                        getSites( catalogDetail.host, result['access_token'] );
+                    }
+                );
+            } else {
+                getSites( catalogDetail.host, this.apiService.getAccessToken() );
+            }
+
+
+        } else {
+            console.log( 'waiting for all hosts, id and password to be entered' );
+        }
+
     }
 
 

@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 export class ApiService {
 
     private env: any;
+    private accessToken: String;
+
     envReceived = new EventEmitter<any>(); // fired when environmental variables are received
 
 
@@ -30,6 +32,14 @@ export class ApiService {
         return this.env;
     }
 
+    getAccessToken () {
+        return this.accessToken;
+    }
+
+    setAccessToken ( token: String ) {
+        this.accessToken = token;
+    }
+
 
     getMcabParse ( text: String ) {
 
@@ -48,6 +58,17 @@ export class ApiService {
     submitCatalog( params ) {
         const url = this.env.SERVER_URL + '/api/v1/catalog';
         return this.httpClient.post(url, params);
+    }
+
+    login ( params ) {
+        const url = this.env.SERVER_URL + '/api/v1/login';
+        return this.httpClient.post(url, params);
+    }
+
+    getSites ( host, accessToken ) {
+        // const url = this.env.SERVER_URL + '/api/v1/sites?';
+        const url = `${this.env.SERVER_URL}/api/v1/sites?bm_host_name=${host}&access_token=${accessToken}`;
+        return this.httpClient.get(url);
     }
 
 }

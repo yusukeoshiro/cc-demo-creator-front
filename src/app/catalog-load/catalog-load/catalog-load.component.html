@@ -6,7 +6,8 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="host-name">Your Commerce Cloud Host Name</label>
-                <input type="text" [(ngModel)]="catalogDetail.host" class="form-control" id="host-name" placeholder="name-pod-dw.demandware.net">
+                <input type="text" [(ngModel)]="catalogDetail.host" class="form-control"
+                    id="host-name" placeholder="name-pod-dw.demandware.net" (change)="onGetSites(catalogDetail)">
             </div>
         </div>
 
@@ -24,11 +25,13 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="bm-user-name">BM User Name</label>
-                <input type="text" [(ngModel)]="catalogDetail.bmUserName" class="form-control" id="bm-user-name" placeholder="BM User Name">
+                <input type="text" [(ngModel)]="catalogDetail.bmUserName" class="form-control"
+                    id="bm-user-name" placeholder="BM User Name" (change)="onGetSites(catalogDetail)">
             </div>
             <div class="bm-password col-md-6">
                 <label for="inputPassword4">BM Password</label>
-                <input type="password" [(ngModel)]="catalogDetail.bmPassword" class="form-control" id="bm-password" placeholder="BM Password">
+                <input type="password" [(ngModel)]="catalogDetail.bmPassword" class="form-control"
+                    id="bm-password" placeholder="BM Password" (change)="onGetSites(catalogDetail)">
             </div>
         </div>
         <div class="form-row">
@@ -40,6 +43,26 @@
 
 
     </div>
+    <div *ngIf="sites">
+
+        <hr>
+
+        <div class="container">
+            <h4>Site Assignment</h4>
+
+
+            <select class="form-control form-control-sm" [(ngModel)]="selectedSiteForAssignment">
+                <option value="" selected="selected">Don't Assign</option>
+                <option *ngFor="let site of sites" [ngValue]="site.id">{{site.id}}</option>
+            </select>
+
+
+
+        </div>
+
+
+    </div>
+
     <hr>
 
     <div class="container">
