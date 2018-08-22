@@ -16,6 +16,7 @@ import { ApiService } from './api.service';
 
 
 import { Routes, RouterModule } from '@angular/router';
+import { FooterComponent } from './common/footer/footer.component';
 
 const appRoutes: Routes = [
     { path: '', component: SiteInitComponent },
@@ -28,7 +29,8 @@ const appRoutes: Routes = [
     AppComponent,
     HeaderComponent,
     CatalogLoadComponent,
-    SiteInitComponent
+    SiteInitComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
