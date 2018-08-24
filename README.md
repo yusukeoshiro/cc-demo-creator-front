@@ -1,4 +1,7 @@
 # CC Demo Creator Front End Application
+last updated: 2018-08-24  
+Heroku App: https://cc-demo-creator-front.herokuapp.com/
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
