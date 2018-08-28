@@ -7,6 +7,8 @@ import { ApiService } from '../../api.service';
     styleUrls: ['./site-init.component.css']
 })
 export class SiteInitComponent implements OnInit {
+    public locales = ['en_US', 'en_CA', 'en_GB', 'en',  'fr', 'fr_CA', 'fr_FR',
+        'de', 'de_DE', 'it', 'it_IT', 'ja', 'ja_JP', 'es', 'zh', 'zh_CN', 'nl'];
 
     public instanceDetail = {
         host: null,
@@ -17,12 +19,12 @@ export class SiteInitComponent implements OnInit {
     public siteDetail = {
         id: null,
         name: null,
+        defualtLocale: this.locales[0],
         defaultCurrency: null,
         allowedCurrencies: null,
         mainColor: null,
         brandLogoUrl: null
     };
-
 
     constructor( private apiService: ApiService ) { }
 
@@ -46,7 +48,5 @@ export class SiteInitComponent implements OnInit {
                 alert('error occured! Look at console for more detail');
             }
         );
-
     }
-
 }
