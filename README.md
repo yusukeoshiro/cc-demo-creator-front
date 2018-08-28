@@ -2,6 +2,9 @@
 last updated: 2018-08-24  
 Heroku App: https://cc-demo-creator-front.herokuapp.com/
 
+**Site Initialize Demo Video**  
+[![Catalog Load Demo](https://img.youtube.com/vi/bY9eACbcOM0/0.jpg)](https://www.youtube.com/watch?v=bY9eACbcOM0)
+
 **Catalog Load Demo Video**  
 [![Catalog Load Demo](https://img.youtube.com/vi/T7UKGEJl8-8/0.jpg)](https://www.youtube.com/watch?v=T7UKGEJl8-8)
 
