@@ -23,7 +23,8 @@ export class SiteInitComponent implements OnInit {
         defaultCurrency: null,
         allowedCurrencies: null,
         mainColor: null,
-        brandLogoUrl: null
+        brandLogoUrl: null,
+        email: null
     };
 
     constructor( private apiService: ApiService ) { }
