@@ -48,7 +48,7 @@ export class CatalogLoadComponent implements OnInit {
     public selectedSiteForAssignment = '';
     public showSiteIdInput = true;
     public selectedProductForImage: String;
-    public isRebuildSearchIndex = true;
+    public isRebuildSearchIndex = false;
     public selectedPricebookCurrency = '';
 
 
