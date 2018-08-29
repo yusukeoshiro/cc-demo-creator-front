@@ -24,7 +24,8 @@ export class SiteInitComponent implements OnInit {
         allowedCurrencies: null,
         mainColor: null,
         brandLogoUrl: null,
-        email: null
+        email: null,
+        isRebuildSearchIndex: false
     };
 
     constructor( private apiService: ApiService ) { }
