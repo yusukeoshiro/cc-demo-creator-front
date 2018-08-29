@@ -46,6 +46,7 @@ export class CatalogLoadComponent implements OnInit {
     };
     public sites: Array<any>;
     public selectedSiteForAssignment = '';
+    public showSiteIdInput = false;
     public selectedProductForImage: String;
     public isRebuildSearchIndex = true;
     public selectedPricebookCurrency = '';
@@ -246,6 +247,7 @@ export class CatalogLoadComponent implements OnInit {
                 },
                 ( error ) => {
                     console.log( error );
+                    this.showSiteIdInput = true;
                 }
             );
         };
@@ -264,6 +266,10 @@ export class CatalogLoadComponent implements OnInit {
                         console.log( result );
                         this.apiService.setAccessToken( result['access_token'] );
                         getSites( catalogDetail.host, result['access_token'] );
+                    },
+                    ( error ) => {
+                        console.log( error );
+                        alert('Login failed with the given credential! Please look at the console log for more detail');
                     }
                 );
             } else {
