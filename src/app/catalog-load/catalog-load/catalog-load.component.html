@@ -30,31 +30,28 @@
 
 
 
-    <div *ngIf="sites || showSiteIdInput">
+    <hr>
 
-        <hr>
-
-        <div class="container">
-            <h4>Site Assignment</h4>
+    <div class="container">
+        <h4>Site Assignment</h4>
 
 
-            <div *ngIf="showSiteIdInput">
-                <label for="site-id-text">Site ID</label>
-                <input type="text" [(ngModel)]="selectedSiteForAssignment" class="form-control"
-                    id="site-id-text" placeholder="SiteID" >
-            </div>
-
-            <select class="form-control form-control-sm" [(ngModel)]="selectedSiteForAssignment" *ngIf="!showSiteIdInput">
-                <option value="" selected="selected">Don't Assign</option>
-                <option *ngFor="let site of sites" [ngValue]="site.id">{{site.id}}</option>
-            </select>
-
-
-
+        <div *ngIf="showSiteIdInput">
+            <label for="site-id-text">Site ID</label>
+            <input type="text" [(ngModel)]="selectedSiteForAssignment" class="form-control"
+                id="site-id-text" placeholder="SiteID" >
         </div>
+
+        <select class="form-control form-control-sm" [(ngModel)]="selectedSiteForAssignment" *ngIf="!showSiteIdInput">
+            <option value="" selected="selected">Don't Assign</option>
+            <option *ngFor="let site of sites" [ngValue]="site.id">{{site.id}}</option>
+        </select>
+
 
 
     </div>
+
+
 
     <hr>
 

@@ -46,7 +46,7 @@ export class CatalogLoadComponent implements OnInit {
     };
     public sites: Array<any>;
     public selectedSiteForAssignment = '';
-    public showSiteIdInput = false;
+    public showSiteIdInput = true;
     public selectedProductForImage: String;
     public isRebuildSearchIndex = true;
     public selectedPricebookCurrency = '';
@@ -244,6 +244,7 @@ export class CatalogLoadComponent implements OnInit {
                 ( result: any ) => {
                     console.log( result );
                     this.sites = result.result.data;
+                    this.showSiteIdInput = false;
                 },
                 ( error ) => {
                     console.log( error );
