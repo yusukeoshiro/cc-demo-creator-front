@@ -50,6 +50,7 @@ export class CatalogLoadComponent implements OnInit {
     public selectedProductForImage: String;
     public isRebuildSearchIndex = false;
     public selectedPricebookCurrency = '';
+    public currencies: Array<any>;
 
 
     constructor ( private hotRegisterer: HotTableRegisterer, private util: Util, private apiService: ApiService ) { }
@@ -286,6 +287,23 @@ export class CatalogLoadComponent implements OnInit {
 
 
     ngOnInit () {
+
+        const setCurrencies = ( data ) => {
+            this.selectedPricebookCurrency = data.CURRENCIES[0].code;
+            this.currencies = data.CURRENCIES;
+        };
+        if ( this.apiService.getEnv() ) {
+            setCurrencies( this.apiService.getEnv() );
+        } else {
+            this.apiService.envReceived.subscribe(
+                ( data: any ) => {
+                    setCurrencies( data );
+                },
+                ( error ) => {
+                    alert( 'error occured while getting environmental variables' );
+                }
+            );
+        }
 
 
         this.productImages = new Array<ProductImage>();
