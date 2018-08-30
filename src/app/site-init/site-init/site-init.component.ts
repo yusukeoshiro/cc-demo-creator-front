@@ -35,29 +35,37 @@ export class SiteInitComponent implements OnInit {
     constructor( private apiService: ApiService ) { }
 
     ngOnInit() {
-        this.apiService.envReceived.subscribe(
-            ( data: any ) => {
-                this.siteDetail.defaultCurrency = data.CURRENCIES[0].code;
-                this.currencies = data.CURRENCIES;
-                this.selectedItems = [];
-                this.dropdownSettings = {
-                    singleSelection: false,
-                    idField: 'code',
-                    textField: 'code',
-                    selectAllText: 'Select All',
-                    unSelectAllText: 'UnSelect All',
-                    itemsShowLimit: 4,
-                    allowSearchFilter: true
-                };
 
-            },
-            ( error ) => {
-                alert( 'error occured while getting environmental variables' );
-            }
-        );
+        const setCurrencies = ( data ) => {
+            this.siteDetail.defaultCurrency = data.CURRENCIES[0].code;
+            this.currencies = data.CURRENCIES;
+            this.selectedItems = [];
+            this.dropdownSettings = {
+                singleSelection: false,
+                idField: 'code',
+                textField: 'code',
+                selectAllText: 'Select All',
+                unSelectAllText: 'UnSelect All',
+                itemsShowLimit: 4,
+                allowSearchFilter: true
+            };
+        };
+        if ( this.apiService.getEnv() ) {
+            setCurrencies( this.apiService.getEnv() );
+        } else {
+            this.apiService.envReceived.subscribe(
+                ( data: any ) => {
+                    setCurrencies( data );
+                },
+                ( error ) => {
+                    alert( 'error occured while getting environmental variables' );
+                }
+            );
+        }
+
     }
 
-    onItemSelect (item:any) {
+    onItemSelect (item: any) {
         console.log(item);
     }
     onSelectAll (items: any) {
