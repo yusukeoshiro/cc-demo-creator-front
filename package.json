@@ -30,6 +30,7 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "handsontable": "^5.0.0",
+    "ng-multiselect-dropdown": "^0.2.1",
     "request-promise": "^4.2.2",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"

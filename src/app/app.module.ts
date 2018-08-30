@@ -17,6 +17,7 @@ import { ApiService } from './api.service';
 
 import { Routes, RouterModule } from '@angular/router';
 import { FooterComponent } from './common/footer/footer.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 const appRoutes: Routes = [
     { path: '', component: SiteInitComponent },
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot( appRoutes ),
     HotTableModule,
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
       HotTableRegisterer,

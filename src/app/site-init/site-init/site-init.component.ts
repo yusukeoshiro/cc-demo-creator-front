@@ -21,23 +21,53 @@ export class SiteInitComponent implements OnInit {
         name: null,
         defualtLocale: this.locales[0],
         defaultCurrency: null,
-        allowedCurrencies: null,
+        allowedCurrencies: [],
         mainColor: null,
         brandLogoUrl: null,
         email: null,
         isRebuildSearchIndex: false
     };
 
+    public currencies;
+    public selectedItems;
+    public dropdownSettings: any;
+
     constructor( private apiService: ApiService ) { }
 
     ngOnInit() {
+        this.apiService.envReceived.subscribe(
+            ( data: any ) => {
+                this.siteDetail.defaultCurrency = data.CURRENCIES[0].code;
+                this.currencies = data.CURRENCIES;
+                this.selectedItems = [];
+                this.dropdownSettings = {
+                    singleSelection: false,
+                    idField: 'code',
+                    textField: 'code',
+                    selectAllText: 'Select All',
+                    unSelectAllText: 'UnSelect All',
+                    itemsShowLimit: 4,
+                    allowSearchFilter: true
+                };
+
+            },
+            ( error ) => {
+                alert( 'error occured while getting environmental variables' );
+            }
+        );
+    }
+
+    onItemSelect (item:any) {
+        console.log(item);
+    }
+    onSelectAll (items: any) {
+        console.log(items);
     }
 
     onSubmitSiteInit = () => {
-
         const params = {
             'instanceDetail': this.instanceDetail,
-            'siteDetail': this.siteDetail
+            'siteDetail': Object.assign(this.siteDetail, { allowedCurrencies: this.siteDetail.allowedCurrencies.join(':')})
         };
 
         this.apiService.submitSite( params ).subscribe(
