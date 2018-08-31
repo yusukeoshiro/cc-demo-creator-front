@@ -75,7 +75,11 @@ export class SiteInitComponent implements OnInit {
     onSubmitSiteInit = () => {
         const params = {
             'instanceDetail': this.instanceDetail,
-            'siteDetail': Object.assign(this.siteDetail, { allowedCurrencies: this.siteDetail.allowedCurrencies.join(':')})
+            'siteDetail': Object.assign(
+                {},
+                this.siteDetail,
+                { allowedCurrencies: this.siteDetail.allowedCurrencies.join(':') }
+            )
         };
 
         this.apiService.submitSite( params ).subscribe(
